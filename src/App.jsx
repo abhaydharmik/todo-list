@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { v4 as uuidv4 } from "uuid";
+import { FaEdit, FaSave } from "react-icons/fa";
+import { FaDeleteLeft } from "react-icons/fa6";
 
 function App() {
   const [todo, setTodo] = useState("");
@@ -72,10 +74,10 @@ function App() {
     <>
       <Navbar />
 
-      <div className="container mx-auto my-6 bg-violet-100 p-4 rounded-xl min-h-[70vh] max-w-[80vw]">
+      <div className="container mx-2 sm:mx-4 md:mx-auto my-20 bg-violet-100 p-6 sm:p-4  rounded-xl min-h-[70vh] min-w-[80vw]">
         <div className="addTodo p-2">
           <h2 className="text-xl font-bold">Add Todo</h2>
-          <div className="flex gap-4 my-2">
+          <div className="flex flex-row gap-4 my-2">
             <input
               type="text"
               name=""
@@ -87,25 +89,31 @@ function App() {
             <button
               onClick={handleAdd}
               disabled={todo.length <= 3}
-              className="bg-violet-600 disabled:bg-gray-500 text-white hover:bg-violet-800 px-5 py-2 rounded-lg"
+              className="bg-violet-600 disabled:bg-gray-500 text-white hover:bg-violet-800 px-2 py-2 rounded-lg"
             >
-              Save
+              <FaSave className="text-2xl" />
             </button>
           </div>
         </div>
 
-        <div className="flex justify-end mx-4 my-6 gap-2 items-center">
-          <input
-            type="checkbox"
-            onChange={toggleFinished}
-            checked={showFinished}
-            name=""
-            id=""
-          />
-          Show Finished
+        <div className="flex justify-between mx-4 my-6 gap-2 items-center">
+          <h2 className="text-xl font-bold">Your Todos</h2>
+
+          <div className="flex gap-2">
+            <input
+              type="checkbox"
+              onChange={toggleFinished}
+              checked={showFinished}
+              name="show"
+              id=""
+              className="scale-150 accent-violet-500"
+            />
+            <label htmlFor="show" className="text-md font-medium">
+              Show Finished
+            </label>
+          </div>
         </div>
 
-        <h2 className="text-xl font-bold">Your Todos</h2>
         <div className="todos">
           {todos.length === 0 && (
             <div className="text-violet-500 text-center m-5">
@@ -117,34 +125,36 @@ function App() {
               (showFinished || !item.isCompleted) && (
                 <div
                   key={item.id}
-                  className="todo flex justify-between gap-2 m-2 bg-violet-200 px-4 py-3 rounded-lg items-center"
+                  className="flex justify-between gap-2 m-2 bg-violet-200 px-4 py-3 rounded-lg items-center"
                 >
-                  <input
-                    name={item.id}
-                    onChange={handleCheckbox}
-                    type="checkbox"
-                    checked={item.isCompleted}
-                    id=""
-                  />
-                  <div className={item.isCompleted ? "line-through" : ""}>
-                    {item.todo}
+                  <div className="flex gap-4 items-center">
+                    <input
+                      name={item.id}
+                      onChange={handleCheckbox}
+                      type="checkbox"
+                      checked={item.isCompleted}
+                      className="accent-violet-600 scale-125"
+                    />
+                    <div className={item.isCompleted ? "line-through" : ""}>
+                      {item.todo}
+                    </div>
                   </div>
                   <div className="buttons flex gap-3">
                     <button
                       onClick={(e) => {
                         handleEdit(e, item.id);
                       }}
-                      className="bg-violet-600 text-white text-sm hover:bg-violet-800 px-4 py-2 rounded-lg"
+                      className="bg-violet-600 text-white text-sm hover:bg-violet-800 px-2 py-2 rounded-lg"
                     >
-                      Edit
+                      <FaEdit />
                     </button>
                     <button
                       onClick={(e) => {
                         handleDelete(e, item.id);
                       }}
-                      className="bg-violet-600 text-white text-sm hover:bg-violet-800 px-4 py-2 rounded-lg"
+                      className="bg-violet-600 text-white text-sm hover:bg-violet-800 px-2 py-2 rounded-lg"
                     >
-                      Delete
+                      <FaDeleteLeft />
                     </button>
                   </div>
                 </div>
